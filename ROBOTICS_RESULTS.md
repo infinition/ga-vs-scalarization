@@ -94,7 +94,7 @@ Readout:
 The robotics tasks refine the audit conclusion:
 
 Scalarization stays the best cheap choice for simple equivariant laws and for
-axis-shift generalization.Cl(3,0) bilinear layers earn their cost in two
+axis-shift generalization. Cl(3,0) bilinear layers earn their cost in two
 regimes: low data on compositional targets, and angle shift when a local
 quantity must be mapped through a rotation. Neither approach solves angle
 extrapolation, GeoEquivariant only degrades more slowly (NMSE 0.23 to 0.26
