@@ -31,3 +31,6 @@ results/*smoke*.json
 # archived, non-reproducible initial sprint
 /geonet_equivariant.py
 /results_sprint.json
+
+# publishing notes (local only)
+/REDDIT_POST.md

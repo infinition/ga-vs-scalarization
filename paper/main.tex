@@ -8,11 +8,6 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
 
-% Placeholder box shown while a figure file is missing.
-\newcommand{\figplaceholder}[2]{%
-  \IfFileExists{#1}{\includegraphics[width=#2]{#1}}{%
-    \fbox{\parbox[c][14em][c]{#2}{\centering PENDING FIGURE\\ \texttt{#1}}}}}
-
 \title{When Do Geometric Algebra Layers Beat Scalarization?\\
 A Controlled Study on SO(3)-Equivariant Vector Laws}
 
@@ -71,9 +66,14 @@ Effect (a) is available from a trivial construction. By classical invariant
 theory, every SO(3)-equivariant vector-valued function of vectors
 $v_1,\dots,v_k$ can be written as
 $\sum_j c_j(\text{invariants})\, b_j$, where the $b_j$ range over the inputs
-and their pairwise cross products and the $c_j$ are functions of the pairwise
-dot products~\citep{villar2021scalars}. Learning the $c_j$ with a small MLP
-gives an exactly equivariant model that we call \emph{scalarization}.
+and their pairwise cross products and the $c_j$ are functions of the SO(3)
+invariants of the inputs: the pairwise dot products and, for orientation-sensitive
+(chiral) targets, the scalar triple products $v_a \cdot (v_b \times v_c)$
+~\citep{villar2021scalars}. Learning the $c_j$ with a small MLP
+gives an exactly equivariant model that we call \emph{scalarization}. Our base
+scalarization uses the dot-product invariants; the strengthened variant adds the
+triple products, and the two tasks with three or more inputs (two-body, nested
+cross) test whether that matters.
 
 This paper asks a narrow question: does a small geometric algebra network
 built from $\mathrm{Cl}(3,0)$ bilinear layers offer anything that
@@ -216,7 +216,7 @@ optimization behavior and inductive fit rather than hard expressivity gaps.
 
 \begin{figure}[t]
 \centering
-\figplaceholder{figures/sample_efficiency.pdf}{0.85\linewidth}
+\includegraphics[width=0.85\linewidth]{figures/sample_efficiency.pdf}
 \caption{Sample efficiency on the compositional tasks, NMSE versus training
 set size, mean over 10 seeds, shaded bands are one standard deviation. On
 composed rotations the geometric network at $n{=}30$ already beats
@@ -228,7 +228,7 @@ $n \approx 1000$.}
 
 \begin{figure}[t]
 \centering
-\figplaceholder{figures/overview.pdf}{0.95\linewidth}
+\includegraphics[width=0.95\linewidth]{figures/overview.pdf}
 \caption{NMSE overview per task and model (log scale, mean over 5 seeds,
 error bars over seeds). Right panel OOD splits: angle shift for rotation and
 torque, axis shift for cross and composed rotations, radius shift for central
