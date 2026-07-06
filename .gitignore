@@ -1,0 +1,33 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+critics/
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/main.pdf
+
+# internal working docs (not for the public repo)
+/HANDOFF.md
+/TODO.md
+
+# throwaway smoke-test outputs
+results/*smoke*.json
+
+# internal analysis docs (self-critical audit trail, kept local)
+/AUDIT.md
+/CONCLUSIONS.md
+/paper/README.md
+# archived, non-reproducible initial sprint
+/geonet_equivariant.py
+/results_sprint.json

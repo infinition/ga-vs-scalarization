@@ -1,0 +1,5 @@
+# Core (benchmarks, tests)
+torch>=2.0
+
+# Figures and demo only
+matplotlib>=3.7
