@@ -114,6 +114,8 @@ and resumes if interrupted.
 - `Scalarization`: dot products -> MLP -> coefficients on {v_i, v_i x v_j}. Exactly equivariant.
 - `VN`, `VN-Cross`: Vector Neurons (Deng et al. 2021), faithful and with cross
   product channels. External equivariant baseline.
+- `E3NN`: irreducible-representation tensor-product network (e3nn). Second
+  external equivariant baseline, optional dependency.
 - `GeoBilinear`: geometric products without equivariant tying. Ablation control.
 - `GeoEquivariant`: grade-wise tied Cl(3,0) bilinear network. Exactly equivariant.
 

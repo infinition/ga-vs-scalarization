@@ -150,6 +150,30 @@ GeoEquivariant, strengthening finding 3 against an external baseline.
   invariant coefficients belong to scalarization; the geometric advantage
   tracks the complexity of the flattened coefficient functions.
 
+## Control 5: external baseline e3nn (`results/e3nn_5seeds.json`)
+
+Irreducible-representation tensor-product network (e3nn), 5 seeds, 200 epochs,
+same fixed budget as all models. Norm of each input expanded into a Gaussian
+radial basis (needed, or the model stays worse than a plain MLP on rotation).
+
+Key readings (NMSE means):
+
+| Task | E3NN | Scalarization | GeoEquivariant |
+|---|---:|---:|---:|
+| rotation n=100 | 0.36 | 0.011 | 0.0036 |
+| cross n=1000 | 0.056 | 0.00054 | 0.014 |
+| central_force n=1000 | 0.21 | 0.031 | 0.0073 |
+| compose_rotation n=100 | 1.35 | 0.54 | 0.031 |
+| compose_rotation ood_axis | 0.19 | 0.055 | 0.0092 |
+| torque n=100 | 1.13 | 0.145 | 0.059 |
+| torque ood_angle | 0.88 | 0.64 | 0.23 |
+
+E3NN is the weakest of the three equivariant models on every single-stage task
+and on both compositional tasks. It is a generic untuned instance, so this
+speaks to the small-scale low-data regime, not to e3nn in general. The point
+for the paper: GeoEquivariant beats the field-standard irreps baseline too,
+which closes the main gap the reviews flagged.
+
 ## Summary of findings
 
 1. Exact equivariance, from any construction, dominates MLP and augmented MLP

@@ -34,3 +34,4 @@ results/*smoke*.json
 
 # publishing notes (local only)
 /REDDIT_POST.md
+paper/figures/*.png

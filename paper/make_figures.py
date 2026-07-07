@@ -24,13 +24,14 @@ ROOT = Path(__file__).resolve().parent.parent
 FIGDIR = Path(__file__).resolve().parent / "figures"
 FIGDIR.mkdir(exist_ok=True)
 
-MODELS = ["MLP", "MLP-Aug", "Scalarization", "VN-Cross", "GeoEquivariant"]
+MODELS = ["MLP", "MLP-Aug", "Scalarization", "VN-Cross", "E3NN", "GeoEquivariant"]
 COLORS = {
     "MLP": "#888888",
     "MLP-Aug": "#b8860b",
     "Scalarization": "#1f77b4",
     "VN": "#8c564b",
     "VN-Cross": "#9467bd",
+    "E3NN": "#2ca02c",
     "GeoEquivariant": "#d62728",
 }
 

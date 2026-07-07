@@ -160,6 +160,18 @@ so a two-vector input cannot produce a cross product. We therefore also test
 VN-Cross, the common practical fix that appends pairwise cross products of
 the inputs as extra channels.
 
+\paragraph{E3NN (6.6k to 11k parameters).} A second external baseline built
+from irreducible-representation tensor products, the standard construction
+behind irreps-based equivariant models~\citep{thomas2018tensor,geiger2022e3nn}.
+Inputs are $l{=}1$ irreps, each block is a self tensor product gated by scalar
+channels with an equivariant BatchNorm, and the norm of each input vector is
+expanded into a small Gaussian radial basis fed as extra scalar channels. This
+radial embedding is standard in irreps models~\citep{batzner2022nequip} and
+was necessary here: without it the network cannot represent functions of an
+angle magnitude and stays worse than a plain MLP on the rotation task. As this
+benchmark is SO(3) rather than full O(3), all irreps use a single parity, which
+sidesteps a channel-pruning failure mode we observed when mixing parities.
+
 \paragraph{GeoBilinear (28k parameters).} Inputs are embedded as multivectors
 of $\mathrm{Cl}(3,0)$ (8 components per channel: vectors on grade 1, axis-angle
 inputs on grade 2 via duality). Three stacked blocks compute
@@ -268,6 +280,7 @@ rotation & Scalarization & 1283 & $0.011 \pm 0.003$ & $0.0040 \pm 0.0016$ & $0.0
 rotation & VN & 2424 & $0.46 \pm 0.02$ & $0.41 \pm 0.01$ & $0.41 \pm 0.01$ & 6.8 \\
 rotation & VN-Cross & 2472 & $0.010 \pm 0.002$ & $0.0029 \pm 0.0007$ & $0.0026 \pm 0.0003$ & 7.5 \\
 rotation & GeoBilinear & 28352 & $0.59 \pm 0.07$ & $0.059 \pm 0.004$ & $0.75 \pm 0.05$ & 16.9 \\
+rotation & E3NN & 6612 & $0.36 \pm 0.10$ & $0.048 \pm 0.019$ & $0.031 \pm 0.011$ & 38.8 \\
 rotation & GeoEquivariant & 1952 & $0.0036 \pm 0.0019$ & $0.0031 \pm 0.0008$ & $0.0031 \pm 0.0010$ & 18.7 \\
 \midrule
 cross & MLP & 7427 & $0.17 \pm 0.01$ & $0.040 \pm 0.011$ & $0.46 \pm 0.06$ & 0.6 \\
@@ -276,6 +289,7 @@ cross & Scalarization & 1283 & $0.0058 \pm 0.0034$ & $0.00054 \pm 0.00047$ & $0.
 cross & VN & 2424 & $1.000 \pm 0.000$ & $1.000 \pm 0.000$ & $1.000 \pm 0.001$ & 4.7 \\
 cross & VN-Cross & 2472 & $0.00039 \pm 0.00013$ & $0.00012 \pm 0.00002$ & $0.00011 \pm 0.00003$ & 4.7 \\
 cross & GeoBilinear & 28352 & $0.58 \pm 0.14$ & $0.025 \pm 0.002$ & $1.01 \pm 0.22$ & 12.8 \\
+cross & E3NN & 6612 & $0.44 \pm 0.09$ & $0.056 \pm 0.012$ & $0.075 \pm 0.023$ & 14.9 \\
 cross & GeoEquivariant & 1952 & $0.015 \pm 0.005$ & $0.014 \pm 0.003$ & $0.014 \pm 0.004$ & 10.8 \\
 \midrule
 central force & MLP & 7427 & $0.73 \pm 0.14$ & $0.027 \pm 0.006$ & $9.6 \pm 8.5$ & 1.0 \\
@@ -284,6 +298,7 @@ central force & Scalarization & 1283 & $0.095 \pm 0.050$ & $0.031 \pm 0.008$ & $
 central force & VN & 2424 & $0.73 \pm 0.16$ & $0.48 \pm 0.02$ & $150 \pm 14$ & 4.6 \\
 central force & VN-Cross & 2472 & $0.27 \pm 0.07$ & $0.13 \pm 0.05$ & $60 \pm 24$ & 3.8 \\
 central force & GeoBilinear & 28352 & $1.48 \pm 0.19$ & $0.063 \pm 0.005$ & $17.8 \pm 2.7$ & 11.8 \\
+central force & E3NN & 6612 & $0.84 \pm 0.47$ & $0.21 \pm 0.15$ & $43 \pm 6$ & 22.2 \\
 central force & GeoEquivariant & 1952 & $0.023 \pm 0.007$ & $0.0073 \pm 0.0015$ & $2.9 \pm 1.4$ & 12.2 \\
 \midrule
 two-body & MLP & 7427 & $1.24 \pm 0.21$ & $0.036 \pm 0.009$ & $19.2 \pm 14.2$ & 0.7 \\
@@ -292,6 +307,7 @@ two-body & Scalarization & 1283 & $0.23 \pm 0.07$ & $0.11 \pm 0.03$ & $268 \pm 2
 two-body & VN & 2424 & $0.93 \pm 0.26$ & $0.49 \pm 0.04$ & $151 \pm 12$ & 4.9 \\
 two-body & VN-Cross & 2472 & $0.28 \pm 0.05$ & $0.12 \pm 0.02$ & $134 \pm 86$ & 7.1 \\
 two-body & GeoBilinear & 28352 & $1.77 \pm 0.28$ & $0.11 \pm 0.02$ & $9.8 \pm 1.9$ & 13.1 \\
+two-body & E3NN & 6612 & $1.9 \pm 1.8$ & $0.40 \pm 0.39$ & $75 \pm 32$ & 15.7 \\
 two-body & GeoEquivariant & 1952 & $0.042 \pm 0.025$ & $0.0064 \pm 0.0028$ & $4.4 \pm 2.5$ & 13.2 \\
 \bottomrule
 \end{tabular}
@@ -311,8 +327,13 @@ stability; GradeGate removal changes little. The external
 baselines sharpen the picture: vanilla Vector Neurons sit exactly at the
 trivial predictor on the cross product (NMSE 1.00, the target leaves the
 linear span of the inputs), while VN-Cross reaches $1.2\times 10^{-4}$ at
-$n{=}1000$, the best result of any model on that task. Any claim that
-$\mathrm{Cl}(3,0)$ layers as such help on simple vector laws is not supported.
+$n{=}1000$, the best result of any model on that task. The irreps baseline
+E3NN, despite being the standard construction of the field, is the weakest of
+the three equivariant models on every single-stage task (cross at $n{=}100$:
+0.44, against 0.006 for scalarization), which underscores that generic
+equivariance without a task-matched parameterization is not enough at this
+scale. Any claim that $\mathrm{Cl}(3,0)$ layers as such help on simple vector
+laws is not supported.
 
 \subsection{Finding 3: composition is where geometric algebra pays}
 
@@ -331,6 +352,7 @@ composed rotations & Scalarization & 1478 & 0.54 & 0.087 & 0.055 & n/a \\
 composed rotations & GeoBilinear & 29888 & 1.23 & 0.54 & 1.04 & n/a \\
 composed rotations & VN & 2472 & 1.28 & 0.67 & 0.61 & n/a \\
 composed rotations & VN-Cross & 2616 & 0.56 & 0.12 & 0.079 & n/a \\
+composed rotations & E3NN & 11022 & 1.35 & 0.41 & 0.19 & n/a \\
 composed rotations & GeoEquivariant & 2048 & \textbf{0.031} & \textbf{0.012} & \textbf{0.0092} & n/a \\
 \midrule
 torque & MLP & 7601 & 1.35 & 0.66 & 1.16 & 1.08 \\
@@ -339,6 +361,7 @@ torque & Scalarization & 1478 & 0.145 & \textbf{0.029} & \textbf{0.020} & 0.64 \
 torque & GeoBilinear & 29888 & 1.63 & 0.58 & 0.66 & 0.56 \\
 torque & VN & 2472 & 1.52 & 0.88 & 0.79 & 0.80 \\
 torque & VN-Cross & 2616 & 0.37 & 0.090 & 0.064 & 0.56 \\
+torque & E3NN & 11022 & 1.13 & 0.31 & 0.15 & 0.88 \\
 torque & GeoEquivariant & 2048 & \textbf{0.059} & 0.030 & 0.031 & \textbf{0.23} \\
 \bottomrule
 \end{tabular}
@@ -371,10 +394,12 @@ On composed rotations, GeoEquivariant reaches NMSE 0.031 / 0.012 / 0.0092
 scalarization. Strengthening the baseline with the triple-product invariant,
 width 128 and depth 3 (35k parameters against 2k) only closes the gap to
 0.29 / 0.038 / 0.020, still 9x / 3x / 2x behind (Table~\ref{tab:control}).
-The result holds against the external baseline: on composed rotations
+The result holds against both external baselines: on composed rotations
 VN-Cross stays 9x to 18x behind GeoEquivariant at every training size
-(0.12 vs 0.012 at $n{=}1000$), and vanilla Vector Neurons never leave the
-0.6 to 1.3 range. The sample-efficiency curves (Figure~\ref{fig:curves},
+(0.12 vs 0.012 at $n{=}1000$), vanilla Vector Neurons never leave the
+0.6 to 1.3 range, and E3NN, though a native irreps architecture, is worse
+still in low data (1.35 at $n{=}100$, 34x behind) and only reaches 0.19 on
+the OOD axis split against 0.0092. The sample-efficiency curves (Figure~\ref{fig:curves},
 10 seeds) sharpen this: on composed rotations GeoEquivariant at $n{=}30$
 (NMSE 0.14) already beats scalarization at $n{=}1000$ (0.087), the gap is
 16x at $n{=}100$ and still 5x at $n{=}3000$. The pattern replicates on the torque task with an
@@ -490,13 +515,13 @@ documented in the repository.}
 \label{sec:limitations}
 
 Synthetic tasks with exactly realizable targets; two compositional tasks,
-both built from the same rotation primitive. Vector Neurons is the only
-external baseline; irreducible-representation architectures (e3nn, tensor
-field networks) remain untested and are the strongest missing comparison.
-Five seeds on the main tables. Results are small scale (thousands of
-samples, 2k-parameter models); we make no claim about behavior at scale.
-The flattening-complexity reading of Finding 3 is supported by the ablations
-but not yet formalized.
+both built from the same rotation primitive. The external baselines (Vector
+Neurons, e3nn) are compact untuned instances, not the large tuned models these
+frameworks reach on real datasets, so their weakness here speaks to the
+low-data small-scale regime, not to the frameworks in general. Five seeds on
+the main tables. Results are small scale (thousands of samples, 2k-parameter
+models); we make no claim about behavior at scale. The flattening-complexity
+reading of Finding 3 is supported by the ablations but not yet formalized.
 
 \section{Conclusion}
 
