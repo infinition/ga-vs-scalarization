@@ -37,7 +37,7 @@ there. On compositional targets whose computation graph nests group
 operations (apply $R_2 R_1$ to a point; map a local force through an
 orientation, then take a torque), the $\mathrm{Cl}(3,0)$ network beats
 scalarization by an order of magnitude in the low-data regime, reaching with
-30 samples the accuracy the baseline achieves with 1000, and the gap survives
+100 samples the accuracy the baseline achieves with 3000, and the gap survives
 strengthening the baseline with the triple-product invariant and 17x more
 parameters, an external Vector Neurons baseline, and a multiplicative
 coefficient network. Ablations show the required network depth tracks the
@@ -231,8 +231,8 @@ optimization behavior and inductive fit rather than hard expressivity gaps.
 \includegraphics[width=0.85\linewidth]{figures/sample_efficiency.pdf}
 \caption{Sample efficiency on the compositional tasks, NMSE versus training
 set size, mean over 10 seeds, shaded bands are one standard deviation. On
-composed rotations the geometric network at $n{=}30$ already beats
-scalarization at $n{=}1000$ and the gap never closes. On the torque task the
+composed rotations the geometric network at $n{=}100$ already beats
+scalarization at $n{=}3000$ and the gap never closes. On the torque task the
 advantage is confined to low data: scalarization overtakes beyond
 $n \approx 1000$.}
 \label{fig:curves}
@@ -395,13 +395,13 @@ scalarization. Strengthening the baseline with the triple-product invariant,
 width 128 and depth 3 (35k parameters against 2k) only closes the gap to
 0.29 / 0.038 / 0.020, still 9x / 3x / 2x behind (Table~\ref{tab:control}).
 The result holds against both external baselines: on composed rotations
-VN-Cross stays 9x to 18x behind GeoEquivariant at every training size
+VN-Cross stays 6x to 17x behind GeoEquivariant at every training size
 (0.12 vs 0.012 at $n{=}1000$), vanilla Vector Neurons never leave the
 0.6 to 1.3 range, and E3NN, though a native irreps architecture, is worse
-still in low data (1.35 at $n{=}100$, 34x behind) and only reaches 0.19 on
+still in low data (1.35 at $n{=}100$, over 40x behind) and only reaches 0.19 on
 the OOD axis split against 0.0092. The sample-efficiency curves (Figure~\ref{fig:curves},
-10 seeds) sharpen this: on composed rotations GeoEquivariant at $n{=}30$
-(NMSE 0.14) already beats scalarization at $n{=}1000$ (0.087), the gap is
+10 seeds) sharpen this: on composed rotations GeoEquivariant at $n{=}100$
+(NMSE 0.034) already beats scalarization at $n{=}3000$ (0.051), the gap is
 16x at $n{=}100$ and still 5x at $n{=}3000$. The pattern replicates on the torque task with an
 honest caveat: the advantage concentrates in low data (3x at $n{=}30$) and
 under angle shift (2.8x against the plain baseline, 1.9x against the
@@ -431,7 +431,7 @@ the typed Clifford product is doing specific work.
 
 Third, composition alone is not where the advantage comes from. On the
 rotation-free composition $(a,b,c) \mapsto a \times (b \times c)$,
-scalarization wins by 20x over GeoEquivariant (0.0028 against 0.068 at
+scalarization wins by 24x over GeoEquivariant (0.0028 against 0.068 at
 $n{=}1000$). The reason is classical: the identity
 $a \times (b \times c) = b\,(a \cdot c) - c\,(a \cdot b)$ flattens this
 target into polynomial invariant coefficients on the fixed basis, exactly
