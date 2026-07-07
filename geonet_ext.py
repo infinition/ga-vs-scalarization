@@ -504,6 +504,9 @@ def build_model_ext(kind: str, task: ExtTask) -> nn.Module:
     if kind == "GeoEquivariant":
         return GeoBiNetX(cin=task.k, equi=True, embed=task.embed,
                          out_indices=task.out_indices, out_signs=task.out_signs)
+    if kind == "E3NN":
+        from geonet_e3nn import E3NNNet
+        return E3NNNet(task.name, depth=3)
     raise ValueError(kind)
 
 

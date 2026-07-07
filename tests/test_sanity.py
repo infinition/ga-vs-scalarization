@@ -115,6 +115,20 @@ def main() -> int:
     r = train_timed(build_model_ext("Scalarization", task), x_train, y_train, x_test, y_test, epochs=100)
     check("scalarization learns cross", r["nmse"] < 0.5, f"nmse={r['nmse']:.3f}")
 
+    # 8. E3NN baseline: equivariance on a few tasks, skipped if e3nn is absent.
+    try:
+        import geonet_e3nn
+        has_e3nn = geonet_e3nn.E3NN_AVAILABLE
+    except ImportError:
+        has_e3nn = False
+    if has_e3nn:
+        for tname in ["rotation", "cross", "compose_rotation"]:
+            task = EXT_TASKS[tname]
+            err = equivariance_error_ext(build_model_ext("E3NN", task), task, seed=7)["relative"]
+            check(f"equivariance {tname} E3NN", err < 1e-4, f"rel_err={err:.2e}")
+    else:
+        print("SKIP e3nn baseline checks (e3nn not installed)")
+
     print(f"\n{len(FAILURES)} failure(s)")
     return 1 if FAILURES else 0
 

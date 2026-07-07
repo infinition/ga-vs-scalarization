@@ -3,3 +3,6 @@ torch>=2.0
 
 # Figures and demo only
 matplotlib>=3.7
+
+# Optional: E3NN external baseline only
+e3nn>=0.5
