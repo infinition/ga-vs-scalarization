@@ -6,7 +6,7 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage[numbers,sort&compress]{natbib}
-\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,hyperfootnotes=false]{hyperref}
 
 \title{When Do Geometric Algebra Layers Beat Scalarization?\\
 A Controlled Study on SO(3)-Equivariant Vector Laws}
@@ -162,7 +162,7 @@ the inputs as extra channels.
 
 \paragraph{E3NN (6.6k to 11k parameters).} A second external baseline built
 from irreducible-representation tensor products, the standard construction
-behind irreps-based equivariant models~\citep{thomas2018tensor,geiger2022e3nn}.
+behind irreps equivariant models~\citep{thomas2018tensor,geiger2022e3nn}.
 Inputs are $l{=}1$ irreps, each block is a self tensor product gated by scalar
 channels with an equivariant BatchNorm, and the norm of each input vector is
 expanded into a small Gaussian radial basis fed as extra scalar channels. This
