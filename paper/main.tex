@@ -34,12 +34,12 @@ orientation, then take a torque), the $\mathrm{Cl}(3,0)$ network beats
 scalarization by an order of magnitude in the low-data regime, reaching with
 100 samples the accuracy the baseline achieves with 3000, and the gap survives
 strengthening the baseline with the triple-product invariant and 17x more
-parameters, an external Vector Neurons baseline, and a multiplicative
+parameters, external Vector Neurons and e3nn baselines, and a multiplicative
 coefficient network. Ablations show the required network depth tracks the
 rotation chain length, and scalarization falls below the constant predictor
 on chains of four rotations. The advantage is not composition per se: on a
 rotation-free nested cross product, which flattens into polynomial invariant
-coefficients, scalarization wins by 20x. On the torque task the advantage is
+coefficients, scalarization wins by 24x. On the torque task the advantage is
 confined to low data, with a crossover near a thousand samples. No tested
 model, equivariant or not, extrapolates invariant
 magnitudes: on radius and separation shifts every model is worse than a
