@@ -8,6 +8,8 @@ matches or beats them, but yes on composed rotations, where stacked geometric
 products beat every baseline tested. No model extrapolates invariant magnitudes
 (angle, radius, separation). See `RESULTS.md` for the tables and `paper/` for the arXiv draft.
 
+ArXiv paper : https://arxiv.org/abs/2607.06634
+
 ## In plain words
 
 Many physical quantities follow the rotation of their frame: turn the scene,
