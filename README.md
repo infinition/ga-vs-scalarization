@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/ga-vs-scalarization.png" alt="ga-vs-scalarization icon" width="128">
+</p>
+
 # Geometric Algebra Layers vs Scalarization for SO(3)-Equivariant Vector Laws
 
 This project measures whether Cl(3,0) geometric algebra layers bring anything
